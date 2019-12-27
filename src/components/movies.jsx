@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import Like from "./common/like";
+import Pagination from "./common/pagination";
+import paginate from "./utils/paginate";
 
 class Movies extends Component {
   render() {
-    const { movies } = this.props;
+    const {
+      movies: allMovies,
+      pageSize,
+      currentPage,
+      onPageChange
+    } = this.props;
 
-    if (movies === null) {
+    if (allMovies === null) {
       return null;
     }
     const { length: count } = this.props.movies;
@@ -13,6 +20,8 @@ class Movies extends Component {
     if (count === 0) {
       return <p>There are no movies to Show</p>;
     }
+
+    const movies = paginate(allMovies, currentPage, pageSize);
 
     return (
       <React.Fragment>
@@ -54,6 +63,12 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
+        <Pagination
+          itemCount={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
       </React.Fragment>
     );
   }

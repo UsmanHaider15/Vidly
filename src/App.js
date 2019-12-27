@@ -5,7 +5,9 @@ import { getMovies } from "./services/fakeMovieService";
 
 class App extends Component {
   state = {
-    movies: null
+    movies: null,
+    pageSize: 4,
+    currentPage: 1
   };
 
   componentDidMount() {
@@ -27,6 +29,10 @@ class App extends Component {
     this.setState({ movies });
   };
 
+  handlePageChange = pageNumber => {
+    this.setState({ currentPage: pageNumber });
+  };
+
   render() {
     return (
       <main className="container">
@@ -34,6 +40,9 @@ class App extends Component {
           movies={this.state.movies}
           onDelete={this.handleDelete}
           onLike={this.handleLike}
+          pageSize={this.state.pageSize}
+          currentPage={this.state.currentPage}
+          onPageChange={this.handlePageChange}
         ></Movies>
       </main>
     );

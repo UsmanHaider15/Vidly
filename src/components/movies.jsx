@@ -12,9 +12,6 @@ class Movies extends Component {
       onPageChange
     } = this.props;
 
-    if (allMovies === null) {
-      return null;
-    }
     const { length: count } = this.props.movies;
 
     if (count === 0) {

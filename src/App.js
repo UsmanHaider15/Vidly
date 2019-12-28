@@ -2,18 +2,16 @@ import React, { Component } from "react";
 import "./App.css";
 import Movies from "./components/movies";
 import { getMovies } from "./services/fakeMovieService";
+import { getGenres } from "./services/fakeGenreService.js";
 import Genre from "./components/genre";
 
 class App extends Component {
   state = {
-    movies: null,
+    movies: getMovies(),
     pageSize: 4,
-    currentPage: 1
+    currentPage: 1,
+    genres: getGenres()
   };
-
-  componentDidMount() {
-    this.setState({ ...this.state, movies: getMovies() });
-  }
 
   handleDelete = id => {
     this.setState({
@@ -39,7 +37,7 @@ class App extends Component {
       <div className="container">
         <div className="row">
           <div className="col-2">
-            <Genre></Genre>
+            <Genre genres={this.state.genres}></Genre>
           </div>
           <div className="col-10">
             <main className="container">

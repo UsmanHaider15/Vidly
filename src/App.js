@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Movies from "./components/movies";
 import { getMovies } from "./services/fakeMovieService";
+import Genre from "./components/genre";
 
 class App extends Component {
   state = {
@@ -35,16 +36,25 @@ class App extends Component {
 
   render() {
     return (
-      <main className="container">
-        <Movies
-          movies={this.state.movies}
-          onDelete={this.handleDelete}
-          onLike={this.handleLike}
-          pageSize={this.state.pageSize}
-          currentPage={this.state.currentPage}
-          onPageChange={this.handlePageChange}
-        ></Movies>
-      </main>
+      <div className="container">
+        <div className="row">
+          <div className="col-2">
+            <Genre></Genre>
+          </div>
+          <div className="col-10">
+            <main className="container">
+              <Movies
+                movies={this.state.movies}
+                onDelete={this.handleDelete}
+                onLike={this.handleLike}
+                pageSize={this.state.pageSize}
+                currentPage={this.state.currentPage}
+                onPageChange={this.handlePageChange}
+              ></Movies>
+            </main>
+          </div>
+        </div>
+      </div>
     );
   }
 }

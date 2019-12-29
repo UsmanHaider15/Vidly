@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Like from "./common/like";
+import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import paginate from "./utils/paginate";
 
@@ -9,7 +10,10 @@ class Movies extends Component {
       movies: allMovies,
       pageSize,
       currentPage,
-      onPageChange
+      onPageChange,
+      genres,
+      onGenreSelect,
+      selectedGenre
     } = this.props;
 
     const { length: count } = this.props.movies;
@@ -21,52 +25,61 @@ class Movies extends Component {
     const movies = paginate(allMovies, currentPage, pageSize);
 
     return (
-      <React.Fragment>
-        <p>There are {count} movies in database</p>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Genre</th>
-              <th scope="col">Stock</th>
-              <th scope="col">Rate</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {movies.map(movie => (
-              <tr key={movie._id}>
-                <td> {movie.title} </td>
-                <td> {movie.genre.name} </td>
-                <td> {movie.numberInStock} </td>
-                <td> {movie.dailyRentalRate} </td>
-                <td>
-                  <Like
-                    liked={movie.liked}
-                    onClick={() => this.props.onLike(movie)}
-                    movie={movie}
-                  ></Like>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => this.props.onDelete(movie._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
+      <div className="row">
+        <div className="col-2">
+          <ListGroup
+            items={genres}
+            selectedGenre={selectedGenre}
+            onItemSelect={onGenreSelect}
+          />
+        </div>
+        <div className="col">
+          <p>There are {count} movies in database</p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Rate</th>
+                <th></th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <Pagination
-          itemCount={count}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={onPageChange}
-        />
-      </React.Fragment>
+            </thead>
+            <tbody>
+              {movies.map(movie => (
+                <tr key={movie._id}>
+                  <td> {movie.title} </td>
+                  <td> {movie.genre.name} </td>
+                  <td> {movie.numberInStock} </td>
+                  <td> {movie.dailyRentalRate} </td>
+                  <td>
+                    <Like
+                      liked={movie.liked}
+                      onClick={() => this.props.onLike(movie)}
+                      movie={movie}
+                    ></Like>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => this.props.onDelete(movie._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Pagination
+            itemCount={count}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+          />
+        </div>
+      </div>
     );
   }
 }

@@ -3,16 +3,18 @@ import "./App.css";
 import Movies from "./components/movies";
 import { getMovies } from "./services/fakeMovieService";
 import { getGenres } from "./services/fakeGenreService.js";
-import Genre from "./components/genre";
 
 class App extends Component {
   state = {
-    movies: getMovies(),
+    movies: [],
+    genres: [],
     pageSize: 4,
-    currentPage: 1,
-    genres: getGenres()
+    currentPage: 1
   };
 
+  componentDidMount() {
+    this.setState({ movies: getMovies(), genres: getGenres() });
+  }
   handleDelete = id => {
     this.setState({
       ...this.state,
@@ -32,27 +34,25 @@ class App extends Component {
     this.setState({ currentPage: pageNumber });
   };
 
+  handleGenreSelect = genre => {
+    this.setState({ selectedGenre: genre });
+  };
+
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-2">
-            <Genre genres={this.state.genres}></Genre>
-          </div>
-          <div className="col-10">
-            <main className="container">
-              <Movies
-                movies={this.state.movies}
-                onDelete={this.handleDelete}
-                onLike={this.handleLike}
-                pageSize={this.state.pageSize}
-                currentPage={this.state.currentPage}
-                onPageChange={this.handlePageChange}
-              ></Movies>
-            </main>
-          </div>
-        </div>
-      </div>
+      <main className="container">
+        <Movies
+          movies={this.state.movies}
+          onDelete={this.handleDelete}
+          onLike={this.handleLike}
+          pageSize={this.state.pageSize}
+          currentPage={this.state.currentPage}
+          onPageChange={this.handlePageChange}
+          genres={this.state.genres}
+          onGenreSelect={this.handleGenreSelect}
+          selectedGenre={this.state.selectedGenre}
+        ></Movies>
+      </main>
     );
   }
 }

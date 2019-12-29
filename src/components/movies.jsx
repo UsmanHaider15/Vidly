@@ -22,9 +22,10 @@ class Movies extends Component {
       return <p>There are no movies to Show</p>;
     }
 
-    const filteredMovies = selectedGenre
-      ? allMovies.filter(m => m.genre._id === selectedGenre._id)
-      : allMovies;
+    const filteredMovies =
+      selectedGenre && selectedGenre._id
+        ? allMovies.filter(m => m.genre._id === selectedGenre._id)
+        : allMovies;
 
     const movies = paginate(filteredMovies, currentPage, pageSize);
 

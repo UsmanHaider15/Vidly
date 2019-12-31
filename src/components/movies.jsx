@@ -3,6 +3,7 @@ import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import paginate from "./utils/paginate";
 import MoviesTable from "./moviesTable";
+import _ from "lodash";
 
 class Movies extends Component {
   render() {
@@ -15,7 +16,9 @@ class Movies extends Component {
       onGenreSelect,
       selectedGenre,
       onLike,
-      onDelete
+      onDelete,
+      onSort,
+      sortColumn
     } = this.props;
 
     const { length: count } = this.props.movies;
@@ -29,7 +32,13 @@ class Movies extends Component {
         ? allMovies.filter(m => m.genre._id === selectedGenre._id)
         : allMovies;
 
-    const movies = paginate(filteredMovies, currentPage, pageSize);
+    const sortedMovies = _.orderBy(
+      filteredMovies,
+      [sortColumn.path],
+      [sortColumn.order]
+    );
+
+    const movies = paginate(sortedMovies, currentPage, pageSize);
 
     return (
       <div className="row">
@@ -42,7 +51,12 @@ class Movies extends Component {
         </div>
         <div className="col">
           <p>There are {filteredMovies.length} movies in database</p>
-          <MoviesTable movies={movies} onLike={onLike} onDelete={onDelete} />
+          <MoviesTable
+            movies={movies}
+            onLike={onLike}
+            onDelete={onDelete}
+            onSort={onSort}
+          />
           <Pagination
             itemCount={filteredMovies.length}
             pageSize={pageSize}

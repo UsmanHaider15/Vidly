@@ -9,11 +9,12 @@ class App extends Component {
     movies: [],
     genres: [],
     pageSize: 4,
-    currentPage: 1
+    currentPage: 1,
+    sortColumn: { path: "title", order: "asc" }
   };
 
   componentDidMount() {
-    const genres = [{ name: "All Genres" }, ...getGenres()];
+    const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
     this.setState({ movies: getMovies(), genres: genres });
   }
 
@@ -40,6 +41,17 @@ class App extends Component {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
+  handleSort = path => {
+    const sortColumn = { ...this.state.sortColumn };
+    if (sortColumn.path === path) {
+      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    } else {
+      sortColumn.path = path;
+      sortColumn.order = "asc";
+    }
+    this.setState({ sortColumn });
+  };
+
   render() {
     return (
       <main className="container">
@@ -53,6 +65,8 @@ class App extends Component {
           genres={this.state.genres}
           onGenreSelect={this.handleGenreSelect}
           selectedGenre={this.state.selectedGenre}
+          onSort={this.handleSort}
+          sortColumn={this.state.sortColumn}
         ></Movies>
       </main>
     );

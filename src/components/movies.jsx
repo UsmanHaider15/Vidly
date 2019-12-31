@@ -56,6 +56,7 @@ class Movies extends Component {
             onLike={onLike}
             onDelete={onDelete}
             onSort={onSort}
+            sortColumn={sortColumn}
           />
           <Pagination
             itemCount={filteredMovies.length}

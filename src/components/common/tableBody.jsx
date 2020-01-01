@@ -7,14 +7,22 @@ class TableBody extends Component {
 
     return _.get(item, column.path);
   };
+
+  createKey = (item, itemIdProperty, column) => {
+    return item[itemIdProperty] + (column.path || column.key);
+  };
+
   render() {
+    const { itemIdProperty } = this.props;
     const { data, columns } = this.props;
     return (
       <tbody>
         {data.map(item => (
-          <tr>
+          <tr key={item[itemIdProperty]}>
             {columns.map(column => (
-              <td>{this.renderCell(item, column)}</td>
+              <td key={this.createKey(item, itemIdProperty, column)}>
+                {this.renderCell(item, column)}
+              </td>
             ))}
           </tr>
         ))}
@@ -22,5 +30,9 @@ class TableBody extends Component {
     );
   }
 }
+
+TableBody.defaultProps = {
+  itemIdProperty: "_id"
+};
 
 export default TableBody;

@@ -6,9 +6,28 @@ import MoviesTable from "./moviesTable";
 import _ from "lodash";
 
 class Movies extends Component {
+  getPagedData() {
+    const {
+      selectedGenre,
+      movies: allMovies,
+      sortColumn,
+      currentPage,
+      pageSize
+    } = this.props;
+    const filteredMovies =
+      selectedGenre && selectedGenre._id
+        ? allMovies.filter(m => m.genre._id === selectedGenre._id)
+        : allMovies;
+    const sortedMovies = _.orderBy(
+      filteredMovies,
+      [sortColumn.path],
+      [sortColumn.order]
+    );
+    const movies = paginate(sortedMovies, currentPage, pageSize);
+    return { totalCount: filteredMovies.length, movies };
+  }
   render() {
     const {
-      movies: allMovies,
       pageSize,
       currentPage,
       onPageChange,
@@ -27,18 +46,7 @@ class Movies extends Component {
       return <p>There are no movies to Show</p>;
     }
 
-    const filteredMovies =
-      selectedGenre && selectedGenre._id
-        ? allMovies.filter(m => m.genre._id === selectedGenre._id)
-        : allMovies;
-
-    const sortedMovies = _.orderBy(
-      filteredMovies,
-      [sortColumn.path],
-      [sortColumn.order]
-    );
-
-    const movies = paginate(sortedMovies, currentPage, pageSize);
+    const { totalCount, movies } = this.getPagedData();
 
     return (
       <div className="row">
@@ -50,7 +58,7 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <p>There are {filteredMovies.length} movies in database</p>
+          <p>There are {totalCount} movies in database</p>
           <MoviesTable
             movies={movies}
             onLike={onLike}
@@ -59,7 +67,7 @@ class Movies extends Component {
             sortColumn={sortColumn}
           />
           <Pagination
-            itemCount={filteredMovies.length}
+            itemCount={totalCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={onPageChange}

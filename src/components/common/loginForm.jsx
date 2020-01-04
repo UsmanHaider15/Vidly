@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 
 class LoginForm extends Component {
-  handleSubmit = e => {
-    e.preventDefault();
-
-    // Call the Server
-    console.log("Submitted");
+  state = {
+    account: {
+      username: "",
+      password: ""
+    }
   };
+
+  handleSubmit = ({ currentTarget: input }) => {
+    const account = { ...this.state.account };
+    account[input.name] = input.value;
+    this.setState({ account });
+  };
+
   render() {
     return (
       <div>
@@ -15,6 +22,9 @@ class LoginForm extends Component {
           <div className="from-group">
             <label htmlFor="username">Username</label>
             <input
+              value={this.state.account.username}
+              onChange={this.handleSubmit}
+              name="username"
               id="username"
               type="text"
               className="form-control"
@@ -24,6 +34,9 @@ class LoginForm extends Component {
           <div className="from-group">
             <label htmlFor="password">Password</label>
             <input
+              value={this.state.account.password}
+              onChange={this.handleSubmit}
+              name="password"
               id="password"
               type="text"
               className="form-control"

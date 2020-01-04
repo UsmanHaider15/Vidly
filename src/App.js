@@ -10,6 +10,7 @@ import Rentals from "./components/Rentals";
 import NotFound from "./components/common/not-found";
 import Home from "./components/home";
 import MovieForm from "./components/movieForm";
+import LoginForm from "./components/common/loginForm";
 
 class App extends Component {
   state = {
@@ -58,6 +59,7 @@ class App extends Component {
         <NavBar></NavBar>
         <main className="container">
           <Switch>
+            <Route path="/login" component={LoginForm} />
             <Route path="/movies/:id" component={MovieForm} />
             <Route
               path="/movies"

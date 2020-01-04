@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Movies from "./components/movies";
+import NavBar from "./components/navBar";
 import { getMovies } from "./services/fakeMovieService";
 import { getGenres } from "./services/fakeGenreService.js";
 
@@ -47,21 +48,24 @@ class App extends Component {
 
   render() {
     return (
-      <main className="container">
-        <Movies
-          movies={this.state.movies}
-          onDelete={this.handleDelete}
-          onLike={this.handleLike}
-          pageSize={this.state.pageSize}
-          currentPage={this.state.currentPage}
-          onPageChange={this.handlePageChange}
-          genres={this.state.genres}
-          onGenreSelect={this.handleGenreSelect}
-          selectedGenre={this.state.selectedGenre}
-          onSort={this.handleSort}
-          sortColumn={this.state.sortColumn}
-        ></Movies>
-      </main>
+      <React.Fragment>
+        <NavBar></NavBar>
+        <main className="container">
+          <Movies
+            movies={this.state.movies}
+            onDelete={this.handleDelete}
+            onLike={this.handleLike}
+            pageSize={this.state.pageSize}
+            currentPage={this.state.currentPage}
+            onPageChange={this.handlePageChange}
+            genres={this.state.genres}
+            onGenreSelect={this.handleGenreSelect}
+            selectedGenre={this.state.selectedGenre}
+            onSort={this.handleSort}
+            sortColumn={this.state.sortColumn}
+          ></Movies>
+        </main>
+      </React.Fragment>
     );
   }
 }

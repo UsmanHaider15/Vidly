@@ -1,27 +1,28 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const NavBar = props => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#">
+      <NavLink className="navbar-brand" to="/">
         Vidly
-      </a>
+      </NavLink>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Movies <span className="sr-only">(current)</span>
-            </a>
+            <NavLink className="nav-link" to="/movies">
+              Movies
+            </NavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <NavLink className="nav-link" to="/customers">
               Customers
-            </a>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <NavLink className="nav-link" to="/rentals">
               Rentals
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>

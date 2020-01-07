@@ -19,7 +19,8 @@ class App extends Component {
     genres: [],
     pageSize: 4,
     currentPage: 1,
-    sortColumn: { path: "title", order: "asc" }
+    sortColumn: { path: "title", order: "asc" },
+    searchQuery: ""
   };
 
   componentDidMount() {
@@ -47,11 +48,15 @@ class App extends Component {
   };
 
   handleGenreSelect = genre => {
-    this.setState({ selectedGenre: genre, currentPage: 1 });
+    this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
   };
 
   handleSort = sortColumn => {
     this.setState({ sortColumn });
+  };
+
+  handleSearch = query => {
+    this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
   };
 
   render() {
@@ -78,6 +83,8 @@ class App extends Component {
                   selectedGenre={this.state.selectedGenre}
                   onSort={this.handleSort}
                   sortColumn={this.state.sortColumn}
+                  onSearch={this.handleSearch}
+                  searchValue={this.state.searchQuery}
                   {...props}
                 />
               )}

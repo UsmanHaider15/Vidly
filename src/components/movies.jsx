@@ -5,6 +5,7 @@ import paginate from "./utils/paginate";
 import MoviesTable from "./moviesTable";
 import _ from "lodash";
 import { Link } from "react-router-dom";
+import SearchBox from "./common/searchBox";
 
 class Movies extends Component {
   getPagedData() {
@@ -13,12 +14,18 @@ class Movies extends Component {
       movies: allMovies,
       sortColumn,
       currentPage,
-      pageSize
+      pageSize,
+      searchValue
     } = this.props;
-    const filteredMovies =
-      selectedGenre && selectedGenre._id
-        ? allMovies.filter(m => m.genre._id === selectedGenre._id)
-        : allMovies;
+
+    let filteredMovies = allMovies;
+    if (searchValue)
+      filteredMovies = allMovies.filter(m =>
+        m.title.toLowerCase().startsWith(searchValue.toLowerCase())
+      );
+    else if (selectedGenre && selectedGenre._id)
+      filteredMovies = allMovies.filter(m => m.genre._id === selectedGenre._id);
+
     const sortedMovies = _.orderBy(
       filteredMovies,
       [sortColumn.path],
@@ -38,7 +45,9 @@ class Movies extends Component {
       onLike,
       onDelete,
       onSort,
-      sortColumn
+      sortColumn,
+      onSearch,
+      searchValue
     } = this.props;
 
     const { length: count } = this.props.movies;
@@ -59,11 +68,16 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link to="movies/new">
-            <button className="btn btn-primary">New Movie</button>
+          <Link
+            to="movies/new"
+            className="btn btn-primary"
+            style={{ marginBottom: 20 }}
+          >
+            New Movie
           </Link>
 
           <p>There are {totalCount} movies in database</p>
+          <SearchBox value={searchValue} onChange={onSearch}></SearchBox>
           <MoviesTable
             movies={movies}
             onLike={onLike}

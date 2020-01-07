@@ -63,6 +63,7 @@ class MoviesForm extends Form {
         <h1>Movie Form</h1>
         <form onSubmit={this.handleSubmit}>
           {this.renderInput("title", "Title")}
+          {this.renderSelect("genreId", "Genre", this.state.genres)}
           {this.renderInput("numberInStock", "Number In Stock", "number")}
           {this.renderInput("dailyRentalRate", "Rate")}
           {this.renderButton("Save")}

@@ -4,6 +4,7 @@ import Pagination from "./common/pagination";
 import paginate from "./utils/paginate";
 import MoviesTable from "./moviesTable";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 class Movies extends Component {
   getPagedData() {
@@ -58,6 +59,10 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
+          <Link to="movies/new">
+            <button className="btn btn-primary">New Movie</button>
+          </Link>
+
           <p>There are {totalCount} movies in database</p>
           <MoviesTable
             movies={movies}

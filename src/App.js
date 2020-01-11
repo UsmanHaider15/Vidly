@@ -5,6 +5,7 @@ import NavBar from "./components/navBar";
 import { getMovies } from "./services/fakeMovieService";
 import { getGenres } from "./services/fakeGenreService.js";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Customers from "./components/customers";
 import Rentals from "./components/Rentals";
 import NotFound from "./components/common/not-found";
@@ -12,6 +13,7 @@ import Home from "./components/home";
 import MovieForm from "./components/movieForm";
 import LoginForm from "./components/common/loginForm";
 import RegistrationFrom from "./components/registrationForm";
+import "react-toastify/dist/ReactToastify.css";
 
 class App extends Component {
   state = {
@@ -62,6 +64,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <NavBar></NavBar>
         <main className="container">
           <Switch>

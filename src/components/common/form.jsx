@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+
 class Form extends Component {
   state = {
     data: {},
@@ -12,6 +13,7 @@ class Form extends Component {
     const result = Joi.validate(this.state.data, this.schema, {
       abortEarly: false
     });
+
     if (!result.error) return null;
     const errors = {};
 

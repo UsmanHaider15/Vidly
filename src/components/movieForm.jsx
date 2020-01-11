@@ -17,7 +17,7 @@ class MoviesForm extends Form {
   };
 
   schema = {
-    _id: Joi.toString(),
+    _id: Joi.string(),
     title: Joi.string().required(),
     genreId: Joi.string().required(),
     numberInStock: Joi.number()
@@ -62,8 +62,8 @@ class MoviesForm extends Form {
     };
   }
 
-  doSubmit = () => {
-    saveMovie(this.state.data);
+  doSubmit = async () => {
+    await saveMovie(this.state.data);
     this.props.history.push("/movies");
   };
 

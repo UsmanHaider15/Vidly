@@ -1,7 +1,9 @@
 import http from "./httpService";
+import { apiUrl } from "../config.js";
 
 export function getMovies() {
-  return http.get("http://localhost:3900/api/movies");
+  console.log(apiUrl + "movies");
+  return http.get(apiUrl + "movies");
 }
 
 export function getMovie() {}
@@ -9,5 +11,5 @@ export function getMovie() {}
 export function saveMovie() {}
 
 export function deleteMovie(movie_id) {
-  return http.delete("http://localhost:3900/api/movies" + "/" + movie_id);
+  return http.delete(apiUrl + "movies" + "/" + movie_id);
 }

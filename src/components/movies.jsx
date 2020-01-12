@@ -124,13 +124,15 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link
-            to="movies/new"
-            className="btn btn-primary"
-            style={{ marginBottom: 20 }}
-          >
-            New Movie
-          </Link>
+          {this.props.user && (
+            <Link
+              to="movies/new"
+              className="btn btn-primary"
+              style={{ marginBottom: 20 }}
+            >
+              New Movie
+            </Link>
+          )}
 
           <p>There are {totalCount} movies in database</p>
           <SearchBox
